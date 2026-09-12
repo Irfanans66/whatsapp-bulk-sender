@@ -1,0 +1,7 @@
+.DS_Store
+.idea/
+__pycache__/
+*.pyc
+wa_chrome_profile/
+wa_schedule.json
+wa_stop.flag
