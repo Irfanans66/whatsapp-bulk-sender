@@ -30,13 +30,16 @@ Built with Streamlit + Selenium. Runs entirely on your local machine using your 
 
 ## Quick Start (no coding needed)
 
-1. Download or clone this repository
-2. Open the folder in Finder
-3. **Double-click `run.command`**
+1. Click the green **Code** button on this page → **Download ZIP**
+2. Unzip the downloaded file (double-click it)
+3. Open **Terminal** — press `Cmd + Space`, type `Terminal`, press Enter
+4. Type `bash ` (with a space), then drag the `run.command` file from Finder into the Terminal window, then press **Enter**
 
-Terminal will open, install all dependencies, and launch the app in your browser automatically.
+Terminal will install all dependencies and open the app in your browser automatically.
 
-> **First time on Mac?** macOS may block the file. Fix: right-click `run.command` → **Open** → **Open**
+> **Why not just double-click?** macOS removes execute permissions from files downloaded as a ZIP. Running via `bash` bypasses this. After the first run you can double-click normally.
+>
+> **If Mac still blocks it:** right-click `run.command` → **Open** → **Open**
 
 ---
 
