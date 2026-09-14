@@ -131,6 +131,24 @@ def init_driver() -> webdriver.Chrome:
     )
     return drv
 
+def _dismiss_popup(driver) -> None:
+    """Close any open WhatsApp Web modal so it doesn't block future sends."""
+    try:
+        btn = driver.find_element(
+            By.XPATH, '//*[contains(@class,"popup-contents")]//button'
+        )
+        btn.click()
+        time.sleep(0.4)
+        return
+    except Exception:
+        pass
+    try:
+        driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+        time.sleep(0.4)
+    except Exception:
+        pass
+
+
 def wa_send(driver, phone: str, text: str, timeout: int = 60) -> tuple[bool, str]:
     try:
         num = clean_phone(phone)
@@ -142,13 +160,14 @@ def wa_send(driver, phone: str, text: str, timeout: int = 60) -> tuple[bool, str
         )
         driver.get(url)
         wait = WebDriverWait(driver, timeout)
-        # Detect "not on WhatsApp" popup
+        # Detect "not on WhatsApp" popup — dismiss it so future sends aren't blocked
         try:
             WebDriverWait(driver, 8).until(
                 EC.presence_of_element_located(
                     (By.XPATH, '//*[contains(@class,"popup-contents")]')
                 )
             )
+            _dismiss_popup(driver)
             return False, "Not on WhatsApp"
         except Exception:
             pass
@@ -162,6 +181,7 @@ def wa_send(driver, phone: str, text: str, timeout: int = 60) -> tuple[bool, str
         time.sleep(2.5)
         return True, "Sent"
     except Exception as e:
+        _dismiss_popup(driver)
         return False, str(e)[:100]
 
 # ── Core send loop ────────────────────────────────────────────────────────────
